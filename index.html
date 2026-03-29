@@ -3,93 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المشتل الذكي - ثانوية لالة خديجة التقنية</title>
+    <title>المشتل الذكي - الرئيسية</title>
     <style>
         :root {
             --primary: #1b4332;
             --accent: #40916c;
             --gold: #d4a373;
             --white: #ffffff;
+            --bg-light: #f0f4f2;
         }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f4f2; margin: 0; padding: 0; }
-        
-        /* Header */
-        /* الإعدادات الجديدة للـ Header */
-    .header { 
-        position: relative;
-        background-image: linear-gradient(rgba(27, 67, 50, 0.7), rgba(27, 67, 50, 0.7)), 
-                          url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); 
-        /* هاد الرابط كيعطي صورة ديال مشتل بجودة عالية، تقدر تبدلو بصورة من تصويركم */
-        background-size: cover;
-        background-position: center;
-        color: white; 
-        text-align: center; 
-        padding: 80px 20px; 
-        border-bottom: 5px solid var(--gold);
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    }
-    
-    .header h1 { 
-        margin: 0; 
-        font-size: 3.5em; 
-        letter-spacing: 2px;
-    }
 
-    .header p { 
-        margin-top: 15px; 
-        font-size: 1.4em; 
-        font-weight: 300;
-        background: rgba(212, 163, 115, 0.8); /* لون ذهبي شفاف تحت اسم الثانوية */
-        display: inline-block;
-        padding: 5px 20px;
-        border-radius: 50px;
-        color: #1b4332;
-    }
-
-    /* إضافة تأثير بسيط عند التحميل */
-    .header h1, .header p {
-        animation: fadeInDown 1s ease-out;
-    }
-
-    @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-        .container { max-width: 1100px; margin: auto; padding: 20px; }
-        .section-title { color: var(--primary); border-right: 5px solid var(--primary); padding-right: 15px; margin: 40px 0 20px; }
-
-        /* Grid & Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { 
-            background: white; border-radius: 15px; overflow: hidden; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; position: relative;
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background: var(--bg-light); 
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden; 
         }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-        .card-img { width: 100%; height: 180px; object-fit: cover; background: #eee; }
-        .card-body { padding: 15px; text-align: center; }
-        .btn-more { background: var(--accent); color: white; padding: 8px 15px; border-radius: 5px; display: inline-block; margin-top: 10px; font-size: 0.9em; }
 
-        /* Modal Style (النافذة المنبثقة) */
-        .modal {
-            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.8); overflow-y: auto;
+        /* زر البرغر العائم (Floating Burger Button) */
+        .burger-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1003;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .modal-content {
-            background: white; margin: 5% auto; padding: 30px; border-radius: 20px;
-            width: 80%; max-width: 700px; position: relative; animation: slideIn 0.3s;
+        .burger-btn:hover {
+            transform: scale(1.1);
+            background-color: var(--accent);
         }
-        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .close { position: absolute; left: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #888; }
-        
-        .modal-header { color: var(--primary); border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
-        .detail-row { margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 8px; }
-        .detail-label { font-weight: bold; color: var(--accent); display: block; margin-bottom: 5px; }
 
-          
+        /* القائمة الجانبية (Sidebar Menu) */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1002;
+            top: 0;
+            right: 0;
+            background-color: var(--primary);
+            overflow-x: hidden;
+            transition: 0.5s ease;
+            padding-top: 60px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        }
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .sidebar a:hover {
+            background: var(--accent);
+            color: var(--gold);
+            padding-right: 40px;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 36px;
+            color: white;
+            cursor: pointer;
+        }
 
+        /* Header (Responsive) */
+        .header { 
+            position: relative;
+            background-image: linear-gradient(rgba(27, 67, 50, 0.7), rgba(27, 67, 50, 0.7)), 
+                              url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 120px 20px;
+            border-bottom: 5px solid var(--gold);
+        }
+        .header h1 { margin: 0; font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .header p { 
+            margin-top: 20px;
+            font-size: 1.4rem;
+            background: rgba(212, 163, 115, 0.9);
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 50px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Container (Responsive) */
+        .container { 
+            max-width: 900px; 
+            width: 90%;
+            margin: -40px auto 40px; /* تداخل بسيط مع الهيدر */
+            padding: 40px; 
+            background: white; 
+            border-radius: 30px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title { 
+            color: var(--primary); 
+            border-right: 6px solid var(--gold); 
+            padding-right: 15px; 
+            margin-bottom: 25px; 
+            font-size: 2rem; 
+        }
+
+        .about-text { 
+            line-height: 1.8; 
+            font-size: 1.2rem; 
+            color: #333; 
+            text-align: justify; 
+        }
+
+        /* Features Grid */
+        .feature-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+            margin-top: 40px; 
+        }
+        .feature-item { 
+            background: #f8fcf9; 
+            padding: 25px; 
+            border-radius: 20px; 
+            border-right: 5px solid var(--accent);
+            transition: 0.3s;
+        }
+        .feature-item:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+        }
+        .feature-item strong { 
+            color: var(--primary); 
+            display: block; 
+            margin-bottom: 12px; 
+            font-size: 1.3rem; 
+        }
+
+        footer { text-align: center; padding: 50px 20px; color: #777; font-size: 1rem; }
+
+        /* Media Queries للهواتف */
+        @media (max-width: 768px) {
+            .header { padding: 80px 15px; }
+            .header h1 { font-size: 2.2rem; }
+            .header p { font-size: 1.1rem; }
+            .container { padding: 25px; margin-top: -20px; }
+            .section-title { font-size: 1.6rem; }
+            .about-text { font-size: 1.1rem; }
+            .burger-btn { top: 15px; right: 15px; width: 45px; height: 45px; }
+        }
     </style>
 </head>
 <body>
+
+<button class="burger-btn" aria-label="Menu" onclick="openNav()">☰</button>
+
+<div id="mySidebar" class="sidebar">
+    <span class="close-btn" onclick="closeNav()">&times;</span>
+    <a href="index.html">🏠 الصفحة الرئيسية</a>
+    <a href="plants.html">🌿 النباتات المزروعة</a>
+    <a href="components.html">⚙️ المكونات الإلكترونية</a>
+    <a href="circuit.html">⚡ الدارة الكهربائية</a>
+    <a href="team.html">👨‍💻 فريق الإنجاز</a>
+</div>
 
 <div class="header">
     <h1>المشتل الذكي</h1>
@@ -97,141 +193,45 @@
 </div>
 
 <div class="container">
-    <h2 class="section-title">🌿 نباتات المشتل (اضغط للمزيد من المعلومات)</h2>
-    <div class="grid" id="plantGrid">
-        </div>
-</div>
+    <h2 class="section-title">حول المشروع</h2>
+    <p class="about-text">
+        مشروع <strong>المشتل الذكي</strong> هو نموذج تطبيقي يجمع بين العلوم الزراعية والتقنيات الإلكترونية الحديثة. يهدف المشروع إلى خلق بيئة مثالية لنمو النباتات بشكل آلي، مع تقليل التدخل البشري وترشيد استهلاك الموارد المائية من خلال أنظمة تحكم مبرمجة سلفاً تتفاعل مع احتياجات النبتة بشكل دقيق.
+    </p>
 
-<div id="plantModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <div id="modalData">
-            </div>
+    <h2 class="section-title">الفكرة الأساسية</h2>
+    <p class="about-text">
+        يعتمد المشتل على وحدة معالجة مركزية مرتبطة بحساسات دقيقة لمراقبة حالة التربة والجو لحظة بلحظة. يتم معالجة هذه البيانات محلياً عبر لوحة <strong>Arduino</strong> التي تتحكم في نظام السقي والتهوية بشكل أوتوماتيكي، مما يضمن للنبات ظروفاً مثالية للنمو في نظام مغلق ومستقل.
+    </p>
+
+    <div class="feature-grid">
+        <div class="feature-item">
+            <strong>🤖 تحكم آلي محلي</strong>
+            نظام ذكي يعتمد على خوارزميات برمجية لاتخاذ قرارات السقي والتهوية فوراً بناءً على قراءات الحساسات المدمجة.
+        </div>
+        <div class="feature-item">
+            <strong>💧 ترشيد دقيق للمياه</strong>
+            بفضل حساسات رطوبة التربة والصمامات الإلكترونية، يتم توجيه الكمية المناسبة من المياه فقط وفي الوقت المناسب تماماً.
+        </div>
     </div>
 </div>
 
+<footer>
+    &copy; 2026 مشروع المشتل الذكي - ثانوية لالة خديجة التقنية
+</footer>
+
 <script>
-    // قاعدة بيانات النباتات
-    const plants = [
-        {
-            name: "الكركدية (Hibiscus)",
-            img: "فوائد_عشبة_الكركدية.jpg",
-            origin: "المناطق الاستوائية والشبه استوائية.",
-            light: "تحتاج أشعة شمس مباشرة وقوية (6-8 ساعات يومياً).",
-            water: "ري منتظم وكثيف في الصيف، مع تجنب غمر الجذور بالماء.",
-            soil: "تربة غنية بالمواد العضوية، جيدة التصريف وحامضية قليلاً.",
-            temp: "ما بين 15°C و 32°C. لا تتحمل الصقيع.",
-            notes: "تستخدم أزهارها في صناعة الشاي الصحي وتعتبر رمزاً للجمال الاستوائي."
-        },
-        {
-            name: "السرخس (Fern)",
-            img: "paporotnik.jpg",
-            origin: "الغابات المطيرة والأماكن الرطبة والمظللة.",
-            light: "إضاءة خفيفة إلى متوسطة (ظل جزئي)، بعيداً عن الشمس المباشرة.",
-            water: "تحتاج رطوبة عالية؛ يجب رش الأوراق بالماء والحفاظ على التربة رطبة.",
-            soil: "تربة غنية بالبيت موس (Peat Moss) تحتفظ بالرطوبة.",
-            temp: "ما بين 18°C و 24°C.",
-            notes: "تعتبر من منقيات الهواء الطبيعية الممتازة داخل المنازل والمشاتل."
-        },
-        {
-            name: "الخزامة (Lavender)",
-            img: "الخزامة.webp",
-            origin: "حوض البحر الأبيض المتوسط.",
-            light: "شمس كاملة ومباشرة (تحتاج للحرارة لتنتج الزيوت العطرية).",
-            water: "ري قليل؛ تتحمل الجفاف الشديد. يجب ترك التربة تجف تماماً بين الريات.",
-            soil: "تربة رملية أو جيرية فقيرة، المهم أن تكون جيدة التصريف جداً.",
-            temp: "تتحمل البرد والحرارة، لكنها تكره الرطوبة العالية في التربة.",
-            notes: "مشهورة برائحتها المهدئة وقدرتها على طرد الحشرات الضارة."
-        },
-        {
-            name: "الصبار",
-            img: "cactus.jpg",
-            origin: "المناطق الصحراوية في المكسيك وجنوب أمريكا.",
-            light: "شمس مباشرة قوية جداً.",
-            water: "ري متباعد جداً؛ مرة كل 15-20 يوماً في الصيف ومرة في الشهر شتاءً.",
-            soil: "تربة رملية وحصوية تسمح بمرور الماء بسرعة.",
-            temp: "تتحمل حتى 45°C.",
-            notes: "مثالي للمبتدئين لأنه يتطلب عناية قليلة جداً."
-        },
-        {
-            name: "الدفلة (Oleander)",
-            img: "OIP.webp",
-            origin: "آسيا ومنطقة المتوسط.",
-            light: "شمس مباشرة.",
-            water: "تتحمل الجفاف بمجرد استقرار جذورها في الأرض.",
-            soil: "تنمو في جميع أنواع التربة حتى الفقيرة منها.",
-            temp: "تتحمل الظروف المناخية القاسية والرياح.",
-            notes: "⚠️ تحذير: نبتة سامة جداً في حال الأكل، يجب التعامل معها بحذر."
-        },
-        {
-            name: "الجهنمية (Bougainvillea)",
-            img: "Bougainvillea-flower.jpg",
-            origin: "البرازيل والمناطق الاستوائية.",
-            light: "تحتاج ما لا يقل عن 6 ساعات من الشمس المباشرة لتزهر بغزارة.",
-            water: "ري معتدل؛ كثرة الماء تمنع ظهور الأزهار.",
-            soil: "تربة جيدة التصريف.",
-            temp: "تحب الدفء ولا تتحمل الصقيع.",
-            notes: "تمتاز بألوانها القوية وتعتبر من أجمل النباتات المتسلقة."
-        },
-        {
-            name: "الأزولا (Azolla)",
-            img: "زراعة-الأزولا.jpg",
-            origin: "نبات مائي طافي يتواجد في البرك والمستنقعات.",
-            light: "ضوء شمس متوسط.",
-            water: "تعيش فوق سطح الماء العذب.",
-            soil: "لا تحتاج تربة، تعتمد على الماء الغني بالمغذيات.",
-            temp: "بين 15°C و 26°C.",
-            notes: "تستخدم كسماد طبيعي للتربة لقدرتها على تثبيت النيتروجين."
-        },
-        {
-            name: "الإيلوديا (Elodea)",
-            img: "OIP (1).webp",
-            origin: "المياه العذبة في أمريكا الشمالية.",
-            light: "تحتاج إضاءة جيدة للقيام بعملية التمثيل الضوئي تحت الماء.",
-            water: "نبات مغمور بالكامل داخل الماء.",
-            soil: "تثبت جذورها في قاع الحوض المائي.",
-            temp: "تفضل المياه الباردة (10°C - 20°C).",
-            notes: "تعتبر مخبراً حياً لإنتاج الأكسجين داخل الأحواض المائية."
-        }
-    ];
-
-    // وظيفة عرض البطاقات
-    const grid = document.getElementById('plantGrid');
-    plants.forEach((plant, index) => {
-        grid.innerHTML += `
-            <div class="card" onclick="openModal(${index})">
-                <img src="${plant.img}" class="card-img">
-                <div class="card-body">
-                    <h3 class="plant-name">${plant.name}</h3>
-                    <div class="btn-more">عرض كل التفاصيل 🔍</div>
-                </div>
-            </div>
-        `;
-    });
-
-    // وظائف النافذة المنبثقة
-    function openModal(index) {
-        const p = plants[index];
-        document.getElementById('modalData').innerHTML = `
-            <h1 class="modal-header">${p.name}</h1>
-            <div class="detail-row"><span class="detail-label">📍 الأصل والبيئة:</span> ${p.origin}</div>
-            <div class="detail-row"><span class="detail-label">☀️ الإضاءة المطلوبة:</span> ${p.light}</div>
-            <div class="detail-row"><span class="detail-label">💧 نظام الري:</span> ${p.water}</div>
-            <div class="detail-row"><span class="detail-label">🌱 نوع التربة:</span> ${p.soil}</div>
-            <div class="detail-row"><span class="detail-label">🌡️ درجة الحرارة:</span> ${p.temp}</div>
-            <div class="detail-row"><span class="detail-label">💡 معلومات إضافية:</span> ${p.notes}</div>
-        `;
-        document.getElementById('plantModal').style.display = "block";
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "280px";
     }
 
-    function closeModal() {
-        document.getElementById('plantModal').style.display = "none";
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
     }
 
-    // إغلاق النافذة عند الضغط خارجها
+    // إغلاق القائمة عند الضغط خارجها (في منطقة معتمة)
     window.onclick = function(event) {
-        if (event.target == document.getElementById('plantModal')) {
-            closeModal();
+        if (event.target == document.getElementById("mySidebar")) {
+            closeNav();
         }
     }
 </script>
