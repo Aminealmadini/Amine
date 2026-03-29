@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المشتل الذكي - ثانوية لالة خديجة التقنية</title>
+    <style>
+        :root {
+            --primary: #1b4332;
+            --accent: #40916c;
+            --gold: #d4a373;
+            --white: #ffffff;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f4f2; margin: 0; padding: 0; }
+        
+        /* Header */
+        /* الإعدادات الجديدة للـ Header */
+    .header { 
+        position: relative;
+        background-image: linear-gradient(rgba(27, 67, 50, 0.7), rgba(27, 67, 50, 0.7)), 
+                          url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); 
+        /* هاد الرابط كيعطي صورة ديال مشتل بجودة عالية، تقدر تبدلو بصورة من تصويركم */
+        background-size: cover;
+        background-position: center;
+        color: white; 
+        text-align: center; 
+        padding: 80px 20px; 
+        border-bottom: 5px solid var(--gold);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .header h1 { 
+        margin: 0; 
+        font-size: 3.5em; 
+        letter-spacing: 2px;
+    }
+
+    .header p { 
+        margin-top: 15px; 
+        font-size: 1.4em; 
+        font-weight: 300;
+        background: rgba(212, 163, 115, 0.8); /* لون ذهبي شفاف تحت اسم الثانوية */
+        display: inline-block;
+        padding: 5px 20px;
+        border-radius: 50px;
+        color: #1b4332;
+    }
+
+    /* إضافة تأثير بسيط عند التحميل */
+    .header h1, .header p {
+        animation: fadeInDown 1s ease-out;
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+        .container { max-width: 1100px; margin: auto; padding: 20px; }
+        .section-title { color: var(--primary); border-right: 5px solid var(--primary); padding-right: 15px; margin: 40px 0 20px; }
+
+        /* Grid & Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { 
+            background: white; border-radius: 15px; overflow: hidden; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; position: relative;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .card-img { width: 100%; height: 180px; object-fit: cover; background: #eee; }
+        .card-body { padding: 15px; text-align: center; }
+        .btn-more { background: var(--accent); color: white; padding: 8px 15px; border-radius: 5px; display: inline-block; margin-top: 10px; font-size: 0.9em; }
+
+        /* Modal Style (النافذة المنبثقة) */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.8); overflow-y: auto;
+        }
+        .modal-content {
+            background: white; margin: 5% auto; padding: 30px; border-radius: 20px;
+            width: 80%; max-width: 700px; position: relative; animation: slideIn 0.3s;
+        }
+        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close { position: absolute; left: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #888; }
+        
+        .modal-header { color: var(--primary); border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
+        .detail-row { margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 8px; }
+        .detail-label { font-weight: bold; color: var(--accent); display: block; margin-bottom: 5px; }
+
+          
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>المشتل الذكي</h1>
+    <p>ثانوية لالة خديجة التقنية</p>
+</div>
+
+<div class="container">
+    <h2 class="section-title">🌿 نباتات المشتل (اضغط للمزيد من المعلومات)</h2>
+    <div class="grid" id="plantGrid">
+        </div>
+</div>
+
+<div id="plantModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modalData">
+            </div>
+    </div>
+</div>
+
+<script>
+    // قاعدة بيانات النباتات
+    const plants = [
+        {
+            name: "الكركدية (Hibiscus)",
+            img: "فوائد_عشبة_الكركدية.jpg",
+            origin: "المناطق الاستوائية والشبه استوائية.",
+            light: "تحتاج أشعة شمس مباشرة وقوية (6-8 ساعات يومياً).",
+            water: "ري منتظم وكثيف في الصيف، مع تجنب غمر الجذور بالماء.",
+            soil: "تربة غنية بالمواد العضوية، جيدة التصريف وحامضية قليلاً.",
+            temp: "ما بين 15°C و 32°C. لا تتحمل الصقيع.",
+            notes: "تستخدم أزهارها في صناعة الشاي الصحي وتعتبر رمزاً للجمال الاستوائي."
+        },
+        {
+            name: "السرخس (Fern)",
+            img: "paporotnik.jpg",
+            origin: "الغابات المطيرة والأماكن الرطبة والمظللة.",
+            light: "إضاءة خفيفة إلى متوسطة (ظل جزئي)، بعيداً عن الشمس المباشرة.",
+            water: "تحتاج رطوبة عالية؛ يجب رش الأوراق بالماء والحفاظ على التربة رطبة.",
+            soil: "تربة غنية بالبيت موس (Peat Moss) تحتفظ بالرطوبة.",
+            temp: "ما بين 18°C و 24°C.",
+            notes: "تعتبر من منقيات الهواء الطبيعية الممتازة داخل المنازل والمشاتل."
+        },
+        {
+            name: "الخزامة (Lavender)",
+            img: "الخزامة.webp",
+            origin: "حوض البحر الأبيض المتوسط.",
+            light: "شمس كاملة ومباشرة (تحتاج للحرارة لتنتج الزيوت العطرية).",
+            water: "ري قليل؛ تتحمل الجفاف الشديد. يجب ترك التربة تجف تماماً بين الريات.",
+            soil: "تربة رملية أو جيرية فقيرة، المهم أن تكون جيدة التصريف جداً.",
+            temp: "تتحمل البرد والحرارة، لكنها تكره الرطوبة العالية في التربة.",
+            notes: "مشهورة برائحتها المهدئة وقدرتها على طرد الحشرات الضارة."
+        },
+        {
+            name: "الصبار المكور الصغير",
+            img: "cactus.jpg",
+            origin: "المناطق الصحراوية في المكسيك وجنوب أمريكا.",
+            light: "شمس مباشرة قوية جداً.",
+            water: "ري متباعد جداً؛ مرة كل 15-20 يوماً في الصيف ومرة في الشهر شتاءً.",
+            soil: "تربة رملية وحصوية تسمح بمرور الماء بسرعة.",
+            temp: "تتحمل حتى 45°C.",
+            notes: "مثالي للمبتدئين لأنه يتطلب عناية قليلة جداً."
+        },
+        {
+            name: "الدفلة (Oleander)",
+            img: "OIP.webp",
+            origin: "آسيا ومنطقة المتوسط.",
+            light: "شمس مباشرة.",
+            water: "تتحمل الجفاف بمجرد استقرار جذورها في الأرض.",
+            soil: "تنمو في جميع أنواع التربة حتى الفقيرة منها.",
+            temp: "تتحمل الظروف المناخية القاسية والرياح.",
+            notes: "⚠️ تحذير: نبتة سامة جداً في حال الأكل، يجب التعامل معها بحذر."
+        },
+        {
+            name: "الجهنمية (Bougainvillea)",
+            img: "Bougainvillea-flower.jpg",
+            origin: "البرازيل والمناطق الاستوائية.",
+            light: "تحتاج ما لا يقل عن 6 ساعات من الشمس المباشرة لتزهر بغزارة.",
+            water: "ري معتدل؛ كثرة الماء تمنع ظهور الأزهار.",
+            soil: "تربة جيدة التصريف.",
+            temp: "تحب الدفء ولا تتحمل الصقيع.",
+            notes: "تمتاز بألوانها القوية وتعتبر من أجمل النباتات المتسلقة."
+        },
+        {
+            name: "الأزولا (Azolla)",
+            img: "زراعة-الأزولا.jpg",
+            origin: "نبات مائي طافي يتواجد في البرك والمستنقعات.",
+            light: "ضوء شمس متوسط.",
+            water: "تعيش فوق سطح الماء العذب.",
+            soil: "لا تحتاج تربة، تعتمد على الماء الغني بالمغذيات.",
+            temp: "بين 15°C و 26°C.",
+            notes: "تستخدم كسماد طبيعي للتربة لقدرتها على تثبيت النيتروجين."
+        },
+        {
+            name: "الإيلوديا (Elodea)",
+            img: "OIP (1).webp",
+            origin: "المياه العذبة في أمريكا الشمالية.",
+            light: "تحتاج إضاءة جيدة للقيام بعملية التمثيل الضوئي تحت الماء.",
+            water: "نبات مغمور بالكامل داخل الماء.",
+            soil: "تثبت جذورها في قاع الحوض المائي.",
+            temp: "تفضل المياه الباردة (10°C - 20°C).",
+            notes: "تعتبر مخبراً حياً لإنتاج الأكسجين داخل الأحواض المائية."
+        }
+    ];
+
+    // وظيفة عرض البطاقات
+    const grid = document.getElementById('plantGrid');
+    plants.forEach((plant, index) => {
+        grid.innerHTML += `
+            <div class="card" onclick="openModal(${index})">
+                <img src="${plant.img}" class="card-img">
+                <div class="card-body">
+                    <h3 class="plant-name">${plant.name}</h3>
+                    <div class="btn-more">عرض كل التفاصيل 🔍</div>
+                </div>
+            </div>
+        `;
+    });
+
+    // وظائف النافذة المنبثقة
+    function openModal(index) {
+        const p = plants[index];
+        document.getElementById('modalData').innerHTML = `
+            <h1 class="modal-header">${p.name}</h1>
+            <div class="detail-row"><span class="detail-label">📍 الأصل والبيئة:</span> ${p.origin}</div>
+            <div class="detail-row"><span class="detail-label">☀️ الإضاءة المطلوبة:</span> ${p.light}</div>
+            <div class="detail-row"><span class="detail-label">💧 نظام الري:</span> ${p.water}</div>
+            <div class="detail-row"><span class="detail-label">🌱 نوع التربة:</span> ${p.soil}</div>
+            <div class="detail-row"><span class="detail-label">🌡️ درجة الحرارة:</span> ${p.temp}</div>
+            <div class="detail-row"><span class="detail-label">💡 معلومات إضافية:</span> ${p.notes}</div>
+        `;
+        document.getElementById('plantModal').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('plantModal').style.display = "none";
+    }
+
+    // إغلاق النافذة عند الضغط خارجها
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('plantModal')) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>
