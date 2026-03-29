@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المشتل الذكي - المكونات الإلكترونية</title>
+    <style>
+        :root {
+            --primary: #1b4332;
+            --accent: #40916c;
+            --gold: #d4a373;
+            --white: #ffffff;
+            --dark: #081c15;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background: #f0f4f2; 
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden; 
+        }
+
+        /* زر البرغر العائم */
+        .burger-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1003;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .burger-btn:hover { transform: scale(1.1); background-color: var(--accent); }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; right: 0;
+            background-color: var(--primary); overflow-x: hidden; transition: 0.5s; padding-top: 60px;
+        }
+        .sidebar a { padding: 15px 30px; text-decoration: none; font-size: 18px; color: white; display: block; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .sidebar a:hover { background: var(--accent); color: var(--gold); }
+        .sidebar .close-btn { position: absolute; top: 15px; left: 20px; font-size: 36px; color: white; cursor: pointer; }
+
+        /* Header */
+        .header { 
+            background-image: linear-gradient(rgba(27, 67, 50, 0.8), rgba(27, 67, 50, 0.8)), 
+                              url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover; background-position: center; color: white; text-align: center; 
+            padding: 80px 20px; border-bottom: 5px solid var(--gold);
+        }
+
+        /* Content Container */
+        .container { max-width: 1200px; width: 90%; margin: 40px auto; padding: 10px; }
+        .section-title { color: var(--primary); border-right: 6px solid var(--gold); padding-right: 15px; margin-bottom: 30px; font-size: 2rem; }
+
+        .comp-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+
+        /* Component Card */
+        .comp-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+        .comp-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        
+        .comp-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #fff;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .comp-info { padding: 20px; flex-grow: 1; text-align: right; }
+        .comp-info h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.3rem; border-bottom: 1px solid var(--gold); display: inline-block; padding-bottom: 5px; }
+        .comp-info p { color: #555; line-height: 1.7; font-size: 0.95rem; margin: 0; }
+        
+        .tag {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        footer { text-align: center; padding: 50px; color: #888; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .comp-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="burger-btn" onclick="openNav()">☰</button>
+
+<div id="mySidebar" class="sidebar">
+    <span class="close-btn" onclick="closeNav()">&times;</span>
+    <a href="index.html">🏠 الصفحة الرئيسية</a>
+    <a href="plants.html">🌿 النباتات المزروعة</a>
+    <a href="components.html">⚙️ المكونات الإلكترونية</a>
+    <a href="circuit.html">⚡ الدارة الكهربائية</a>
+    <a href="team.html">👨‍💻 فريق الإنجاز</a>
+</div>
+
+<div class="header">
+    <h1>⚙️ المكونات الإلكترونية</h1>
+    <p>الأجهزة والعتاد التقني المستخدم في المشروع</p>
+</div>
+
+<div class="container">
+    <h2 class="section-title">قائمة المكونات التقنية</h2>
+    
+    <div class="comp-grid">
+        <div class="comp-card">
+            <img src="https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=400&q=80" class="comp-img" alt="Arduino Uno">
+            <div class="comp-info">
+                <span class="tag">عقل النظام</span>
+                <h3>لوحة Arduino Uno</h3>
+                <p>وحدة التحكم المركزية التي تبرمج لاستقبال بيانات الحساسات واتخاذ قرارات التشغيل الآلي للمضخات.</p>
+            </div>
+        </div>
+
+        <div class="comp-card">
+            <img src= "images-1/bfcapacitive.jpg" class="comp-img" alt="Soil Moisture Sensor" onerror="this.src='https://via.placeholder.com/400x250?text=Soil+Moisture+Sensor'">
+            <div class="comp-info">
+                <span class="tag">حساس مدخلات</span>
+                <h3>حساس رطوبة التربة</h3>
+                <p>يغرس في التربة لقياس مستوى الرطوبة، مما يسمح للنظام بمعرفة متى تحتاج النبتة للسقي الفعلي.</p>
+            </div>
+        </div>
+
+        <div class="comp-card">
+            <img src="images-1/UDbtNdmXckbQ8XX5X9n6Bmp0zpwlRbPcQB9jkjJI.webp" class="comp-img" alt="DHT11 Sensor" onerror="this.src='https://via.placeholder.com/400x250?text=DHT11+Sensor'">
+            <div class="comp-info">
+                <span class="tag">حساس بيئي</span>
+                <h3>حساس DHT11</h3>
+                <p>حساس رقمي مخصص لقياس درجة حرارة الجو ونسبة الرطوبة في الهواء داخل محيط المشتل.</p>
+            </div>
+        </div>
+
+        <div class="comp-card">
+            <img src="images-1/DC-5V-Small-Brushless-Pet-Mini-Water-Dispenser-Submersible-Aquarium-Fish-Tank-Fountain-Water-Circulation-Immersible-Pump.avif" class="comp-img" alt="Water Pump" onerror="this.src='https://via.placeholder.com/400x250?text=Water+Pump'">
+            <div class="comp-info">
+                <span class="tag">وحدة تنفيذية</span>
+                <h3>مضخة مياه (5V/12V)</h3>
+                <p>المحرك المسؤول عن سحب المياه من الخزان وتوصيلها للنباتات عبر أنابيب السقي عند تلقي الأمر.</p>
+            </div>
+        </div>
+
+        <div class="comp-card">
+            <img src="images-1/voltaat-2x16-lcd-with-i2c-module-14298841907302.webp" class="comp-img" alt="LCD Display" onerror="this.src='https://via.placeholder.com/400x250?text=LCD+I2C+Display'">
+            <div class="comp-info">
+                <span class="tag">وحدة العرض</span>
+                <h3>شاشة LCD 16x2 I2C</h3>
+                <p>شاشة رقمية تعرض بيانات الحساسات (الحرارة، الرطوبة) بشكل مباشر للمستخدم لمراقبة حالة المشتل.</p>
+            </div>
+        </div>
+
+        <div class="comp-card">
+            <div style="height:200px; display:flex; align-items:center; justify-content:center; background:#eee;">
+                <img src="images-1/31f0155a-0e07-486f-9379-41084b90022e-1000x992.webp" style="max-height:100%; max-width:100%; object-fit:contain;" onerror="this.src='https://via.placeholder.com/400x250?text=Relay+Module'">
+            </div>
+            <div class="comp-info">
+                <span class="tag">مفتاح إلكتروني</span>
+                <h3>وحدة المرحل (Relay)</h3>
+                <p>تعمل كمفتاح أمان يسمح لتيار الأردوينو الصغير بالتحكم في تشغيل أجهزة أقوى مثل المضخة.</p>
+            </div>
+        </div>
+
+        <div class="comp-card">
+            <img src="images-1/1.jpg" class="comp-img" alt="Electrovanne" onerror="this.src='https://via.placeholder.com/400x250?text=Electrovanne'">
+            <div class="comp-info">
+                <span class="tag">تحكم هيدروليكي</span>
+                <h3>صمام كهربائي (Electrovanne)</h3>
+                <p>يتحكم في تدفق المياه داخل الأنابيب، حيث يفتح ويغلق آلياً للسماح بمرور الماء عند الحاجة للسقي.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 مشروع المشتل الذكي - ثانوية لالة خديجة التقنية
+</footer>
+
+<script>
+    function openNav() { document.getElementById("mySidebar").style.width = "280px"; }
+    function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+    
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("mySidebar")) { closeNav(); }
+    }
+</script>
+
+</body>
+</html>

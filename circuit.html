@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المشتل الذكي - الدارة الكهربائية</title>
+    <style>
+        :root {
+            --primary: #1b4332;
+            --accent: #40916c;
+            --gold: #d4a373;
+            --white: #ffffff;
+            --warning: #e63946;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background: #f0f4f2; 
+            margin: 0; padding: 0; 
+            overflow-x: hidden; 
+        }
+
+        /* زر البرغر العائم */
+        .burger-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 1003;
+            background-color: var(--primary); color: white; border: none;
+            border-radius: 50%; width: 50px; height: 50px; font-size: 24px;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; right: 0;
+            background-color: var(--primary); overflow-x: hidden; transition: 0.5s; padding-top: 60px;
+        }
+        .sidebar a { padding: 15px 30px; text-decoration: none; font-size: 18px; color: white; display: block; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* Header */
+        .header { 
+            background-image: linear-gradient(rgba(27, 67, 50, 0.8), rgba(27, 67, 50, 0.8)), 
+                              url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover; background-position: center; color: white; text-align: center; 
+            padding: 80px 20px; border-bottom: 5px solid var(--gold);
+        }
+
+        .container { max-width: 1000px; width: 90%; margin: 40px auto; padding: 10px; }
+        
+        .circuit-box {
+            background: white; padding: 30px; border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 30px;
+        }
+
+        .circuit-img {
+            width: 100%; border-radius: 15px; margin-bottom: 20px;
+            border: 2px solid #eee; display: block;
+        }
+
+        .section-title { color: var(--primary); border-right: 6px solid var(--gold); padding-right: 15px; margin-bottom: 25px; }
+
+        /* Table Style */
+        .connections-table {
+            width: 100%; border-collapse: collapse; margin-top: 20px; background: white;
+        }
+        .connections-table th, .connections-table td {
+            border: 1px solid #ddd; padding: 12px; text-align: center;
+        }
+        .connections-table th { background-color: var(--primary); color: white; }
+        .connections-table tr:nth-child(even) { background-color: #f9f9f9; }
+
+        .note-card {
+            background: #fff3cd; border-right: 5px solid #ffca2c;
+            padding: 15px; border-radius: 10px; color: #856404; margin-top: 20px;
+        }
+
+        footer { text-align: center; padding: 40px; color: #888; }
+
+        @media (max-width: 768px) {
+            .connections-table { font-size: 14px; display: block; overflow-x: auto; }
+            .header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="burger-btn" onclick="openNav()">☰</button>
+
+<div id="mySidebar" class="sidebar">
+    <span style="position:absolute; top:15px; left:20px; color:white; font-size:36px; cursor:pointer;" onclick="closeNav()">&times;</span>
+    <a href="index.html">🏠 الصفحة الرئيسية</a>
+    <a href="plants.html">🌿 النباتات المزروعة</a>
+    <a href="components.html">⚙️ المكونات الإلكترونية</a>
+    <a href="circuit.html">⚡ الدارة الكهربائية</a>
+    <a href="team.html">👨‍💻 فريق الإنجاز</a>
+</div>
+
+<div class="header">
+    <h1>⚡ الدارة الكهربائية</h1>
+    <p>مخطط التوصيل وكيفية ربط المكونات</p>
+</div>
+
+<div class="container">
+    <div class="circuit-box">
+        <h2 class="section-title">مخطط التوصيل (Schematic)</h2>
+        <img src="https://blog.tinker cad.com/hubfs/Arduino%20Soil%20Moisture%20Sensor.png" alt="مخطط الدارة" class="circuit-img" onerror="this.src='https://via.placeholder.com/800x450?text=Arduino+Circuit+Diagram'">
+        <p style="line-height: 1.8; color: #444;">
+            يعتمد نظام المشتل على ربط متكامل بين الحساسات (كـ مدخلات) والمحركات (كـ مخرجات). يتم تزويد الأردوينو بالطاقة اللازمة، ويقوم بتحليل القراءات التناظرية والرقمية للتحكم في الصمامات والمضخات عبر وحدة المرحل (Relay).
+        </p>
+    </div>
+
+    <h2 class="section-title">جدول منافذ التوصيل (Pin Mapping)</h2>
+    <table class="connections-table">
+        <thead>
+            <tr>
+                <th>المكون الإلكتروني</th>
+                <th>منفذ الأردوينو (Pin)</th>
+                <th>نوع الإشارة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>حساس رطوبة التربة</td>
+                <td>A0 (Analog)</td>
+                <td>مدخلات (Input)</td>
+            </tr>
+            <tr>
+                <td>حساس الحرارة DHT11</td>
+                <td>D2 (Digital)</td>
+                <td>مدخلات (Input)</td>
+            </tr>
+            <tr>
+                <td>وحدة المرحل (Relay)</td>
+                <td>D8 (Digital)</td>
+                <td>مخرجات (Output)</td>
+            </tr>
+            <tr>
+                <td>شاشة LCD (SDA)</td>
+                <td>A4 / SDA</td>
+                <td>اتصال I2C</td>
+            </tr>
+            <tr>
+                <td>شاشة LCD (SCL)</td>
+                <td>A5 / SCL</td>
+                <td>اتصال I2C</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="note-card">
+        <strong>⚠️ تنبيه تقني:</strong> يجب التأكد من ربط جميع الخطوط الأرضية (GND) معاً لضمان استقرار الإشارات الكهربائية وتجنب القراءات الخاطئة في الحساسات.
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 مشروع المشتل الذكي - ثانوية لالة خديجة التقنية
+</footer>
+
+<script>
+    function openNav() { document.getElementById("mySidebar").style.width = "280px"; }
+    function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("mySidebar")) { closeNav(); }
+    }
+</script>
+
+</body>
+</html>

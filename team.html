@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المشتل الذكي - فريق الإنجاز</title>
+    <style>
+        :root {
+            --primary: #1b4332;
+            --accent: #40916c;
+            --gold: #d4a373;
+            --white: #ffffff;
+            --soft-bg: #f8faf9;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background: #f0f4f2; 
+            margin: 0; padding: 0; 
+            overflow-x: hidden; 
+        }
+
+        /* زر البرغر العائم */
+        .burger-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 1003;
+            background-color: var(--primary); color: white; border: none;
+            border-radius: 50%; width: 50px; height: 50px; font-size: 24px;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; right: 0;
+            background-color: var(--primary); overflow-x: hidden; transition: 0.5s; padding-top: 60px;
+        }
+        .sidebar a { padding: 15px 30px; text-decoration: none; font-size: 18px; color: white; display: block; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* Header */
+        .header { 
+            background-image: linear-gradient(rgba(27, 67, 50, 0.8), rgba(27, 67, 50, 0.8)), 
+                              url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover; background-position: center; color: white; text-align: center; 
+            padding: 80px 20px; border-bottom: 5px solid var(--gold);
+        }
+
+        .container { max-width: 1100px; width: 90%; margin: 50px auto; }
+        .section-title { color: var(--primary); border-right: 6px solid var(--gold); padding-right: 15px; margin-bottom: 40px; text-align: center; display: table; margin-left: auto; margin-right: auto; }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border-top: 5px solid var(--accent);
+        }
+        .team-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+
+        .member-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid var(--gold);
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .member-name { color: var(--primary); font-size: 1.4rem; margin: 10px 0 5px 0; }
+        .member-role { color: var(--accent); font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
+        .member-desc { color: #777; font-size: 0.9rem; line-height: 1.6; margin-top: 10px; }
+
+        /* Supervisor Section */
+        .supervisor-box {
+            background: var(--primary); color: white;
+            padding: 30px; border-radius: 20px; text-align: center; margin-bottom: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .supervisor-box h3 { color: var(--gold); margin-top: 0; }
+
+        footer { text-align: center; padding: 50px; color: #888; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .team-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="burger-btn" onclick="openNav()">☰</button>
+
+<div id="mySidebar" class="sidebar">
+    <span style="position:absolute; top:15px; left:20px; color:white; font-size:36px; cursor:pointer;" onclick="closeNav()">&times;</span>
+    <a href="index.html">🏠 الصفحة الرئيسية</a>
+    <a href="plants.html">🌿 النباتات المزروعة</a>
+    <a href="components.html">⚙️ المكونات الإلكترونية</a>
+    <a href="circuit.html">⚡ الدارة الكهربائية</a>
+    <a href="team.html">👨‍💻 فريق الإنجاز</a>
+</div>
+
+<div class="header">
+    <h1>👨‍💻 فريق الإنجاز</h1>
+    <p>العقول المبدعة خلف مشروع المشتل الذكي</p>
+</div>
+
+<div class="container">
+    <div class="supervisor-box">
+        <h3>تحت إشراف الأساتذة</h3>
+        <p style="font-size: 1.3rem; margin: 0;"><strong></strong></p>
+        <p style="opacity: 0.8;"></p>
+    </div>
+
+    <h2 class="section-title">الروبوتيك</h2>
+    
+    <div class="team-grid">
+        <div class="team-card">
+            
+            <h3 class="member-name">أسامة الدعبوز</h3>
+            <span class="member-role">طالب جذع مشترك</span>
+            <p class="member-desc">ينتمي إلى مجموعة الروبوتيك</p>
+        </div>
+
+        <div class="team-card">
+           
+            <h3 class="member-name">أمين المديني</h3>
+            <span class="member-role">طالب جذع مشترك</span>
+            <p class="member-desc">المسؤول عن برمجة الموقع الخاص بالمشروع</p>
+        </div>
+
+        <div class="team-card">
+            
+            <h3 class="member-name">دعاء بغداد</h3>
+            <span class="member-role">طالبة جذع مشترك</span>
+            <p class="member-desc">المتحدثة باسم الفريق</p>
+        </div>
+
+        <div class="team-card">
+            
+            <h3 class="member-name">أيمن </h3>
+            <span class="member-role">طالب جذع مشترك</span>
+            <p class="member-desc">ضمن مجموعة الروبوتيك</p>
+        </div>
+
+        
+    </div>
+    <h2 class="section-title">البيئة</h2>
+    <div class="team-grid">
+        <div class="team-card">
+            
+            <h3 class="member-name">مروى حلوش</h3>
+            <span class="member-role">طالبة جذع مشترك</span>
+            <p class="member-desc">ضمن مجموعة البيئة</p>
+        </div>
+
+        <div class="team-card">
+            
+            <h3 class="member-name">محمد الشريف</h3>
+            <span class="member-role">طالب جذع مشترك</span>
+            <p class="member-desc">ضمن مجموعة البيئة</p>
+        </div>
+
+        <div class="team-card">
+            
+            <h3 class="member-name">ياسين ذكيري</h3>
+            <span class="member-role">طالب جذع مشترك</span>
+            <p class="member-desc">ضمن مجموعة البيئة</p>
+        </div>
+
+
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 مشروع المشتل الذكي - ثانوية لالة خديجة التقنية
+</footer>
+
+<script>
+    function openNav() { document.getElementById("mySidebar").style.width = "280px"; }
+    function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("mySidebar")) { closeNav(); }
+    }
+</script>
+
+</body>
+</html>
