@@ -4,165 +4,270 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المشتل الذكي - الدارة الكهربائية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&family=Vazirmatn:wght@200;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1b4332;
-            --accent: #40916c;
-            --gold: #d4a373;
-            --white: #ffffff;
-            --warning: #e63946;
+            --bg-color: #f0f2f5; 
+            --primary: #2563eb; 
+            --accent: #10b981; 
+            --secondary: #64748b;
+            --card-bg: #f0f2f5;
+            --shadow-light: #ffffff;
+            --shadow-dark: #d1d9e6;
+            --text-main: #1e293b;
+            --table-row-even: rgba(255,255,255,0.3);
         }
+
+        /* إعدادات الوضع الداكن */
+        [data-theme="dark"] {
+            --bg-color: #0b0e14;
+            --card-bg: #0b0e14;
+            --text-main: #f0f2f5;
+            --secondary: #94a3b8;
+            --shadow-light: #161b22;
+            --shadow-dark: #000000;
+            --table-row-even: rgba(255,255,255,0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s, box-shadow 0.3s; }
 
         body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background: #f0f4f2; 
-            margin: 0; padding: 0; 
-            overflow-x: hidden; 
+            font-family: 'Vazirmatn', sans-serif; 
+            background: var(--bg-color); 
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* زر البرغر العائم */
-        .burger-btn {
-            position: fixed; top: 20px; right: 20px; z-index: 1003;
-            background-color: var(--primary); color: white; border: none;
-            border-radius: 50%; width: 50px; height: 50px; font-size: 24px;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.3s;
+        /* هيدر الكبسولة المطور */
+        header.nav-header {
+            position: sticky; top: 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 40px;
+            background: rgba(240, 242, 245, 0.85);
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
+            z-index: 1100;
+            backdrop-filter: blur(12px);
         }
 
-        /* Sidebar */
+        [data-theme="dark"] header.nav-header { background: rgba(11, 14, 20, 0.85); }
+
+        .logo { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--primary); }
+        .logo span { color: var(--accent); font-weight: 800; }
+
+        .nav-container { display: flex; align-items: center; }
+
+        nav a {
+            text-decoration: none; color: var(--secondary); margin-right: 25px;
+            font-weight: 400; transition: 0.3s;
+        }
+        nav a:hover { color: var(--primary); }
+        nav a.active { color: var(--accent); font-weight: 700; }
+
+        /* أزرار التحكم والبورجر */
+        .header-btns { display: flex; gap: 10px; margin-right: 20px; }
+        .icon-btn {
+            background: var(--bg-color); border: none;
+            width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+            color: var(--text-main); font-size: 1.1rem;
+        }
+        .burger-btn { display: none; }
+
+        /* القائمة الجانبية (Sidebar) */
         .sidebar {
-            height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; right: 0;
-            background-color: var(--primary); overflow-x: hidden; transition: 0.5s; padding-top: 60px;
+            position: fixed; top: 0; left: -280px;
+            width: 280px; height: 100%;
+            background: var(--bg-color);
+            z-index: 2000;
+            box-shadow: 10px 0 30px var(--shadow-dark);
+            padding: 40px 20px;
+            transition: 0.4s ease;
+            display: flex; flex-direction: column; gap: 15px;
         }
-        .sidebar a { padding: 15px 30px; text-decoration: none; font-size: 18px; color: white; display: block; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-        /* Header */
-        .header { 
-            background-image: linear-gradient(rgba(27, 67, 50, 0.8), rgba(27, 67, 50, 0.8)), 
-                              url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); 
-            background-size: cover; background-position: center; color: white; text-align: center; 
-            padding: 80px 20px; border-bottom: 5px solid var(--gold);
+        .sidebar.active { left: 0; }
+        .sidebar a {
+            text-decoration: none; color: var(--text-main);
+            padding: 15px 20px; border-radius: 15px;
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
         }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1999; display: none; }
 
-        .container { max-width: 1000px; width: 90%; margin: 40px auto; padding: 10px; }
+        .header-title { text-align: center; padding: 60px 20px; }
+        .header-title h1 { color: var(--text-main); font-size: 2.5rem; margin-bottom: 10px; }
+        .header-title p { color: var(--secondary); }
+
+        .container { max-width: 1000px; width: 90%; margin: 0 auto 40px; padding: 10px; }
         
         .circuit-box {
-            background: white; padding: 30px; border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 30px;
+            background: var(--card-bg); padding: 30px; border-radius: 30px;
+            box-shadow: 15px 15px 30px var(--shadow-dark), -15px -15px 30px var(--shadow-light);
+            margin-bottom: 30px;
         }
 
-        .circuit-img {
-            width: 100%; border-radius: 15px; margin-bottom: 20px;
-            border: 2px solid #eee; display: block;
+        .section-title { 
+            color: var(--primary); 
+            border-right: 6px solid var(--accent); 
+            padding-right: 15px; margin-bottom: 25px; 
         }
 
-        .section-title { color: var(--primary); border-right: 6px solid var(--gold); padding-right: 15px; margin-bottom: 25px; }
-
-        /* Table Style */
+        /* الجدول المطور */
         .connections-table {
-            width: 100%; border-collapse: collapse; margin-top: 20px; background: white;
+            width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--bg-color);
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            border-radius: 20px; overflow: hidden;
         }
         .connections-table th, .connections-table td {
-            border: 1px solid #ddd; padding: 12px; text-align: center;
+            border: 1px solid var(--shadow-dark); padding: 18px; text-align: center;
         }
-        .connections-table th { background-color: var(--primary); color: white; }
-        .connections-table tr:nth-child(even) { background-color: #f9f9f9; }
+        .connections-table th { background-color: var(--primary); color: white; font-weight: 700; border: none; }
+        .connections-table tr:nth-child(even) { background-color: var(--table-row-even); }
 
         .note-card {
-            background: #fff3cd; border-right: 5px solid #ffca2c;
-            padding: 15px; border-radius: 10px; color: #856404; margin-top: 20px;
+            background: var(--bg-color); border-right: 5px solid var(--primary);
+            padding: 20px; border-radius: 15px; color: var(--secondary); margin-top: 30px;
+            box-shadow: 5px 5px 15px var(--shadow-dark);
         }
 
-        footer { text-align: center; padding: 40px; color: #888; }
+        footer { text-align: center; padding: 40px; color: var(--secondary); font-size: 0.9rem; }
 
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
+            header.nav-header { top: 0; width: 100%; border-radius: 0; margin: 0; padding: 15px 20px; }
+            nav { display: none; }
+            .burger-btn { display: flex; }
             .connections-table { font-size: 14px; display: block; overflow-x: auto; }
-            .header h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-<button class="burger-btn" onclick="openNav()">☰</button>
+    <div class="overlay" id="overlay"></div>
 
-<div id="mySidebar" class="sidebar">
-    <span style="position:absolute; top:15px; left:20px; color:white; font-size:36px; cursor:pointer;" onclick="closeNav()">&times;</span>
-    <a href="index.html">🏠 الصفحة الرئيسية</a>
-    <a href="plants.html">🌿 النباتات المزروعة</a>
-    <a href="components.html">⚙️ المكونات الإلكترونية</a>
-    <a href="circuit.html">⚡ الدارة الكهربائية</a>
-    <a href="team.html">👨‍💻 فريق الإنجاز</a>
-</div>
+    <header class="nav-header">
+        <div class="logo">SMART<span>NURSERY</span></div>
+        <div class="nav-container">
+            <nav>
+                <a href="index.html">الرئيسية</a>
+                <a href="plants.html">النباتات</a>
+                <a href="circuit.html" class="active">المخطط</a>
+                <a href="components.html">القطع</a>
+                <a href="team.html">فريق الإنجاز</a>
+            </nav>
+            <div class="header-btns">
+                <button class="icon-btn" id="theme-toggle">🌙</button>
+                <button class="icon-btn burger-btn" id="burger-toggle">☰</button>
+            </div>
+        </div>
+    </header>
 
-<div class="header">
-    <h1>⚡ الدارة الكهربائية</h1>
-    <p>مخطط التوصيل وكيفية ربط المكونات</p>
-</div>
-
-<div class="container">
-    <div class="circuit-box">
-        <h2 class="section-title">مخطط التوصيل (Schematic)</h2>
-        <img src="https://blog.tinker cad.com/hubfs/Arduino%20Soil%20Moisture%20Sensor.png" alt="مخطط الدارة" class="circuit-img" onerror="this.src='https://via.placeholder.com/800x450?text=Arduino+Circuit+Diagram'">
-        <p style="line-height: 1.8; color: #444;">
-            يعتمد نظام المشتل على ربط متكامل بين الحساسات (كـ مدخلات) والمحركات (كـ مخرجات). يتم تزويد الأردوينو بالطاقة اللازمة، ويقوم بتحليل القراءات التناظرية والرقمية للتحكم في الصمامات والمضخات عبر وحدة المرحل (Relay).
-        </p>
+    <div class="sidebar" id="sidebar">
+        <h3 style="text-align: center; color: var(--primary); margin-bottom: 10px;">القائمة</h3>
+        <a href="index.html">الرئيسية</a>
+        <a href="plants.html">النباتات</a>
+        <a href="circuit.html">المخطط</a>
+        <a href="components.html">القطع</a>
+        <a href="team.html">فريق الإنجاز</a>
     </div>
 
-    <h2 class="section-title">جدول منافذ التوصيل (Pin Mapping)</h2>
-    <table class="connections-table">
-        <thead>
-            <tr>
-                <th>المكون الإلكتروني</th>
-                <th>منفذ الأردوينو (Pin)</th>
-                <th>نوع الإشارة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>حساس رطوبة التربة</td>
-                <td>A0 (Analog)</td>
-                <td>مدخلات (Input)</td>
-            </tr>
-            <tr>
-                <td>حساس الحرارة DHT11</td>
-                <td>D2 (Digital)</td>
-                <td>مدخلات (Input)</td>
-            </tr>
-            <tr>
-                <td>وحدة المرحل (Relay)</td>
-                <td>D8 (Digital)</td>
-                <td>مخرجات (Output)</td>
-            </tr>
-            <tr>
-                <td>شاشة LCD (SDA)</td>
-                <td>A4 / SDA</td>
-                <td>اتصال I2C</td>
-            </tr>
-            <tr>
-                <td>شاشة LCD (SCL)</td>
-                <td>A5 / SCL</td>
-                <td>اتصال I2C</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="note-card">
-        <strong>⚠️ تنبيه تقني:</strong> يجب التأكد من ربط جميع الخطوط الأرضية (GND) معاً لضمان استقرار الإشارات الكهربائية وتجنب القراءات الخاطئة في الحساسات.
+    <div class="header-title">
+        <h1>⚡ الدارة الكهربائية</h1>
+        <p>مخطط التوصيل وكيفية ربط المكونات</p>
     </div>
-</div>
 
-<footer>
-    &copy; 2026 مشروع المشتل الذكي - ثانوية لالة خديجة التقنية
-</footer>
+    <div class="container">
+        <div class="circuit-box">
+            <h2 class="section-title">مخطط التوصيل (Schematic)</h2>
+            <p style="line-height: 1.8; color: var(--secondary);">
+                يعتمد نظام المشتل على ربط متكامل بين الحساسات (كـ مدخلات) والمحركات (كـ مخرجات). يتم تزويد الأردوينو بالطاقة اللازمة، ويقوم بتحليل القراءات التناظرية والرقمية للتحكم في الصمامات والمضخات عبر وحدة المرحل (Relay).
+            </p>
+        </div>
 
-<script>
-    function openNav() { document.getElementById("mySidebar").style.width = "280px"; }
-    function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
-    window.onclick = function(event) {
-        if (event.target == document.getElementById("mySidebar")) { closeNav(); }
-    }
-</script>
+        <h2 class="section-title">جدول منافذ التوصيل (Pin Mapping)</h2>
+        <table class="connections-table">
+            <thead>
+                <tr>
+                    <th>المكون الإلكتروني</th>
+                    <th>منفذ الأردوينو (Pin)</th>
+                    <th>نوع الإشارة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>حساس رطوبة التربة</td>
+                    <td>A0 (Analog)</td>
+                    <td>مدخلات (Input)</td>
+                </tr>
+                <tr>
+                    <td>حساس الحرارة DHT11</td>
+                    <td>D2 (Digital)</td>
+                    <td>مدخلات (Input)</td>
+                </tr>
+                <tr>
+                    <td>وحدة المرحل (Relay)</td>
+                    <td>D8 (Digital)</td>
+                    <td>مخرجات (Output)</td>
+                </tr>
+                <tr>
+                    <td>شاشة LCD (SDA)</td>
+                    <td>A4 / SDA</td>
+                    <td>اتصال I2C</td>
+                </tr>
+                <tr>
+                    <td>شاشة LCD (SCL)</td>
+                    <td>A5 / SCL</td>
+                    <td>اتصال I2C</td>
+                </tr>
+            </tbody>
+        </table>
 
+        <div class="note-card">
+            <strong>⚠️ تنبيه تقني:</strong> يجب التأكد من ربط جميع الخطوط الأرضية (GND) معاً لضمان استقرار الإشارات الكهربائية وتجنب القراءات الخاطئة في الحساسات.
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 مشروع المشتل الذكي - ثانوية لالة خديجة التقنية
+    </footer>
+
+    <script>
+        // منطق الوضع الليلي (Dark Mode)
+        const themeToggle = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        });
+
+        // منطق القائمة الجانبية (Sidebar)
+        const burgerBtn = document.getElementById('burger-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+            overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+        }
+
+        burgerBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
 </body>
 </html>
